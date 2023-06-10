@@ -4,6 +4,8 @@ using UnityEngine;
 using RPG.Movement;
 using System;
 using RPG.Combat;
+using UnityEditor.Networking.PlayerConnection;
+using RPG.Core;
 
 namespace RPG.Control
 {
@@ -11,16 +13,17 @@ namespace RPG.Control
     {
 
         MovementHandler MovementHandler;
-
+        Health health;
         private void Start()
         {
             MovementHandler = GetComponent<MovementHandler>();
+            health = GetComponent<Health>();    
         }
         private void Update()
         {
-            if (InterfaceWhitCombat()) return;
-            if (InterfaceWhitMove()) return;
-           
+            if (health.IsDead()) { return; }
+           if (InterfaceWhitCombat()) return;
+           if (InterfaceWhitMove()) return;
         }
 
         private bool InterfaceWhitCombat()
@@ -30,13 +33,14 @@ namespace RPG.Control
             {
 
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if (!GetComponent<Fighter>().CanAttack(target))
+                if(target == null) { continue; }
+                if (!GetComponent<Fighter>().CanAttack(target.gameObject))
                 {
                     continue;
                 }
                 if (Input.GetMouseButtonDown(0))
                 {
-                    GetComponent<Fighter>().attack(target);
+                    GetComponent<Fighter>().attack(target.gameObject);
                     target = null;
                 }
                 return true;

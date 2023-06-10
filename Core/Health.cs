@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-namespace RPG.Combat
+namespace RPG.Core
+
 {
     
     public class Health : MonoBehaviour
@@ -35,9 +36,8 @@ namespace RPG.Combat
         {
             if (isDead) { return; }
             isDead = true;
-           // GetComponent<NavMeshAgent>().enabled = false;
-            //GetComponent<CapsuleCollider>().enabled = false;    
             GetComponent<Animator>().SetTrigger("die");
+            GetComponent<ActionScheduler>().cancelCurrentAction();
         }
     }
 }

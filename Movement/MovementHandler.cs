@@ -14,16 +14,19 @@ namespace RPG.Movement
 
         NavMeshAgent meshAgent;
         Animator animator;
+        Health health;
         Vector3 Speed;
         void Start()
         {
             meshAgent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
+            health = GetComponent<Health>();    
 
         }
 
         void Update()
         {
+            meshAgent.enabled = !health.IsDead();
             UpdateAnimation();
         }
 
