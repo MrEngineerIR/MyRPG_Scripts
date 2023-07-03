@@ -27,7 +27,7 @@ namespace RPG.Combat
             if (target.IsDead()) { return; }
            if (!GetIsInRange())
            {
-                movementHandler.MoveTo(target.transform.position);
+                movementHandler.MoveTo(target.transform.position , 1f);
            }
            else
            {

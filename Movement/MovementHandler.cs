@@ -15,6 +15,7 @@ namespace RPG.Movement
         NavMeshAgent meshAgent;
         Animator animator;
         Health health;
+        [SerializeField] float maxSpeed = 6f;
         Vector3 Speed;
         void Start()
         {
@@ -39,16 +40,17 @@ namespace RPG.Movement
         }
 
 
-        public void StartMoveAction(Vector3 destination)
+        public void StartMoveAction(Vector3 destination , float speedFraction)
         {
             GetComponent<ActionScheduler>().startAction(this);
-            MoveTo(destination);
+            MoveTo(destination, speedFraction);
             
         }
-        public void MoveTo(Vector3 destination)
+        public void MoveTo(Vector3 destination , float speedFraction)
         {
             meshAgent.isStopped = false;
             meshAgent.destination = destination;
+            meshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
             
         }
         public void Cancel()

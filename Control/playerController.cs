@@ -56,7 +56,7 @@ namespace RPG.Control
             {
                 if (Input.GetMouseButton(0))
                 {
-                    MovementHandler.StartMoveAction(hitInfo.point);
+                    MovementHandler.StartMoveAction(hitInfo.point , 1f);
                 }
                 return true;
             }

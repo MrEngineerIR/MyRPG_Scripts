@@ -5,6 +5,7 @@ using RPG.Combat;
 using RPG.Core;
 using System;
 using RPG.Movement;
+using UnityEngine.AI;
 
 namespace RPG.Control
 {
@@ -15,6 +16,9 @@ namespace RPG.Control
         [SerializeField] PatrolPath patrolPath;
         [SerializeField] float WaypointTolerance = 1f;
         [SerializeField] float waypointDewllTime = 3f;
+        [Range(0,1)]
+        [SerializeField] float patrolSpeedFraction = 0.2f;
+       
         Fighter Fighter;
         MovementHandler MovementHandler;
         GameObject player;
@@ -61,6 +65,7 @@ namespace RPG.Control
 
         private void PatrolBehaviour()
         {
+            
             Vector3 nextPosision = GuardPosition;
             if (patrolPath != null)
             {
@@ -73,7 +78,7 @@ namespace RPG.Control
             }
             if (TimeSinceArrivedAtWaypoint > waypointDewllTime)
             {
-                MovementHandler.StartMoveAction(nextPosision);
+                MovementHandler.StartMoveAction(nextPosision , patrolSpeedFraction);
             }
             
         }
@@ -104,6 +109,7 @@ namespace RPG.Control
             GameObject player =  findPlayer();
             if (Fighter.CanAttack(player))
             {
+                
                 Fighter.attack(player); 
             }
         }
